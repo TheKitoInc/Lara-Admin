@@ -4,7 +4,7 @@ class SettingsController extends BaseController
 {
     protected $table;
 
-    function __construct()
+    public function __construct()
     {
         $this->beforeFilter('table_settings', array('except' => array('settings')));
         $this->beforeFilter('table_needle', array('except' => array('settings')));
@@ -41,7 +41,8 @@ class SettingsController extends BaseController
                             'listable' => true,
                             'created_at' => Utils::timestamp(),
                             'updated_at' => Utils::timestamp()
-                        ]);
+                        ]
+                    );
                 }
             }
 
@@ -102,7 +103,8 @@ class SettingsController extends BaseController
                     'listable' => Input::get($column . "_listable"),
                     'created_at' => Utils::timestamp(),
                     'updated_at' => Utils::timestamp()
-                ]);
+                ]
+            );
 
             if (Input::get($column . "_type") == "radio") {
 

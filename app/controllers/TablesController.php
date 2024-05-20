@@ -4,7 +4,7 @@ class TablesController extends BaseController
 {
     protected $table;
 
-    function __construct()
+    public function __construct()
     {
         $this->beforeFilter('table_settings');
         $this->beforeFilter('table_needle');
@@ -24,7 +24,7 @@ class TablesController extends BaseController
         $name = $timestamp . "_file." . $ext;
 
         // move uploaded file from temp to uploads directory
-        if ($file->move(public_path() . $this->settings->upload_path , $name)) {
+        if ($file->move(public_path() . $this->settings->upload_path, $name)) {
             return $this->settings->upload_path . $name;
         } else {
             return false;
@@ -148,8 +148,9 @@ class TablesController extends BaseController
 
         for ($i = 0; $i < sizeOf($columns); $i++) {
 
-            if (!empty($columns[$i]->edit_rule) && isset($data[$columns[$i]->column_name]))
+            if (!empty($columns[$i]->edit_rule) && isset($data[$columns[$i]->column_name])) {
                 $rules[$columns[$i]->column_name] = $columns[$i]->edit_rule;
+            }
         }
 
         $v = Validator::make($data, $rules);
@@ -178,8 +179,9 @@ class TablesController extends BaseController
 
         for ($i = 0; $i < sizeOf($columns); $i++) {
 
-            if (!empty($columns[$i]->create_rule) && isset($data[$columns[$i]->column_name]))
+            if (!empty($columns[$i]->create_rule) && isset($data[$columns[$i]->column_name])) {
                 $rules[$columns[$i]->column_name] = $columns[$i]->create_rule;
+            }
         }
 
         $v = Validator::make($data, $rules);
@@ -194,9 +196,9 @@ class TablesController extends BaseController
         foreach ($inputs as $column => $value) {
             if (Schema::hasColumn($this->table->table_name, $column)) {
 
-                if(is_file($value)){
+                if(is_file($value)) {
                     $arr[$column] = $this->uploadFeaturedImage($value);
-                }else{
+                } else {
                     $arr[$column] = $value;
                 }
             }
